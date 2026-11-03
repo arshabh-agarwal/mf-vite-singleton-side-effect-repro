@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>module-federation/vite: local shared fallback evaluated eagerly</title>
+    <script>
+      window.__errors = [];
+      const report = (message) => {
+        window.__errors.push(message);
+        const el = document.getElementById('errors');
+        if (el) el.textContent = window.__errors.join('\n');
+      };
+      window.addEventListener('error', (e) => report(e.message));
+      window.addEventListener('unhandledrejection', (e) => report(String(e.reason?.message ?? e.reason)));
+    </script>
+  </head>
+  <body>
+    <h1>host (shared-elements 1.0.0) + remote (shared-elements 1.1.0)</h1>
+    <p>Copies of shared-elements evaluated: <code id="evaluated">(pending)</code></p>
+    <p>Version the host received: <code id="received">(pending)</code></p>
+    <p>Version the remote received: <code id="remote">(pending)</code></p>
+    <p>Errors:</p>
+    <pre id="errors"></pre>
+    <shared-el></shared-el>
+    <script>
+      // Updated even when src/main.js throws during evaluation.
+      setTimeout(() => {
+        document.getElementById('evaluated').textContent =
+          JSON.stringify(globalThis.__sharedElementsEvaluated ?? []);
+      }, 3000);
+    </script>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "host",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@module-federation/vite": "1.23.8",
+    "vite": "^7.3.7"
+  },
+  "dependencies": {
+    "shared-elements": "file:../packages/shared-elements-1.0.0"
+  }
+}
